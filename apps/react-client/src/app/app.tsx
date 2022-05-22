@@ -1,12 +1,16 @@
+import { User } from '@acme/shared-models';
 import { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { Ticket, User } from '@acme/shared-models';
+import { Route, Routes } from 'react-router-dom';
 
 import styles from './app.module.css';
+import { useAppDispatch, useAppSelector } from './hooks/hooks';
+import { initializeTicketState } from './store/tickets/tickets';
+import { ticketsSelector } from './store/tickets/tickets.selectors';
 import Tickets from './tickets/tickets';
 
 const App = () => {
-  const [tickets, setTickets] = useState([] as Ticket[]);
+  const tickets = useAppSelector(ticketsSelector);
+  const dispatch = useAppDispatch();
   const [users, setUsers] = useState([] as User[]);
 
   // Very basic way to synchronize state with server.
@@ -14,7 +18,8 @@ const App = () => {
   useEffect(() => {
     async function fetchTickets() {
       const data = await fetch('/api/tickets').then();
-      setTickets(await data.json());
+
+      dispatch(initializeTicketState(await data.json()));
     }
 
     async function fetchUsers() {
