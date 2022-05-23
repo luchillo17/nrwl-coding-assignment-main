@@ -1,14 +1,18 @@
 import { Ticket, User } from '@acme/shared-models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+export interface TicketWithUser extends Ticket {
+  user?: User;
+}
+
 export interface AssigneePayload {
-  ticketId: Ticket['id'];
+  ticketId: TicketWithUser['id'];
   userId: User['id'];
 }
 
 export interface TicketsState {
-  tickets: Ticket[];
-  formTicket?: Partial<Ticket>;
+  tickets: TicketWithUser[];
+  formTicket?: Partial<TicketWithUser>;
 }
 
 const initialState: TicketsState = {
@@ -19,11 +23,11 @@ const ticketsSlice = createSlice({
   name: 'tickets',
   initialState,
   reducers: {
-    initializeTicketState(state, action: PayloadAction<Ticket[]>) {
+    initializeTicketState(state, action: PayloadAction<TicketWithUser[]>) {
       state.tickets = action.payload;
     },
 
-    addTicket(state, action: PayloadAction<Ticket>) {
+    addTicket(state, action: PayloadAction<TicketWithUser>) {
       state.tickets.push(action.payload);
     },
 

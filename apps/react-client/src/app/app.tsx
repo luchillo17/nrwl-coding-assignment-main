@@ -1,17 +1,17 @@
-import { User } from '@acme/shared-models';
-import { useEffect, useState } from 'react';
+import { Container, Stack, useTheme } from '@mui/material';
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import styles from './app.module.css';
-import { useAppDispatch, useAppSelector } from './hooks/hooks';
+import { Header } from './components/header';
+import { useAppDispatch } from './hooks/hooks';
+import { TicketsPage } from './pages/tickets.page';
+import { UsersPage } from './pages/users.page';
 import { initializeTicketState } from './store/tickets/tickets';
-import { ticketsSelector } from './store/tickets/tickets.selectors';
-import Tickets from './tickets/tickets';
+import { initializeUsersState } from './store/users/users';
 
 const App = () => {
-  const tickets = useAppSelector(ticketsSelector);
+  const theme = useTheme();
   const dispatch = useAppDispatch();
-  const [users, setUsers] = useState([] as User[]);
 
   // Very basic way to synchronize state with server.
   // Feel free to use any state/fetch library you want (e.g. react-query, xstate, redux, etc.).
@@ -24,7 +24,8 @@ const App = () => {
 
     async function fetchUsers() {
       const data = await fetch('/api/users').then();
-      setUsers(await data.json());
+
+      dispatch(initializeUsersState(await data.json()));
     }
 
     fetchTickets();
@@ -32,14 +33,17 @@ const App = () => {
   }, []);
 
   return (
-    <div className={styles['app']}>
-      <h1>Ticketing App</h1>
-      <Routes>
-        <Route path="/" element={<Tickets tickets={tickets} />} />
-        {/* Hint: Try `npx nx g component TicketDetails --no-export` to generate this component  */}
-        <Route path="/:id" element={<h2>Details Not Implemented</h2>} />
-      </Routes>
-    </div>
+    <Stack sx={{ height: '100%', backgroundColor: theme.palette.grey[300] }}>
+      <Header />
+
+      <Container sx={{ flex: 1, padding: '1rem' }}>
+        <Routes>
+          <Route path="/" element={<TicketsPage />} />
+          {/* Hint: Try `npx nx g component TicketDetails --no-export` to generate this component  */}
+          <Route path="/users" element={<UsersPage />} />
+        </Routes>
+      </Container>
+    </Stack>
   );
 };
 
