@@ -31,6 +31,19 @@ const ticketsSlice = createSlice({
       state.tickets.push(action.payload);
     },
 
+    setTicketStatus(
+      state,
+      action: PayloadAction<{ ticket: TicketWithUser; completed: boolean }>
+    ) {
+      const _ticket = state.tickets.find(
+        (_ticket) => _ticket.id === action.payload.ticket.id
+      );
+
+      if (_ticket) {
+        _ticket.completed = action.payload.completed;
+      }
+    },
+
     assignTicket(
       state,
       { payload: { ticketId, userId } }: PayloadAction<AssigneePayload>
@@ -44,7 +57,11 @@ const ticketsSlice = createSlice({
   },
 });
 
-export const { initializeTicketState, addTicket, assignTicket } =
-  ticketsSlice.actions;
+export const {
+  addTicket,
+  assignTicket,
+  initializeTicketState,
+  setTicketStatus,
+} = ticketsSlice.actions;
 
 export const ticketsReducer = ticketsSlice.reducer;
