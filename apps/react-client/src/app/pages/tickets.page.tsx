@@ -9,6 +9,7 @@ import {
   ticketsPendingSelector,
   unassignedTicketsSelector,
 } from '../store/tickets/tickets.selectors';
+import { Link as RouterLink } from 'react-router-dom';
 
 export const TicketsPage = () => {
   const unassignedTickets = useAppSelector(unassignedTicketsSelector);
@@ -21,12 +22,16 @@ export const TicketsPage = () => {
         title="Unassigned tickets"
         tickets={unassignedTickets}
       />
+
       <TicketsAccordion title="Pending tickets" tickets={pendingTickets} />
+
       <TicketsAccordion title="Completed tickets" tickets={doneTickets} />
 
       <Fab
         color="primary"
         aria-label="add"
+        to="/tickets/new"
+        component={RouterLink}
         sx={{ position: 'fixed', bottom: '1rem', right: '1rem' }}
       >
         <AddIcon />

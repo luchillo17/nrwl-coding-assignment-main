@@ -58,6 +58,7 @@ export const Header = () => {
             <ListItem key={link.to} disablePadding>
               <ListItemButton component={RouterLink} to={link.to}>
                 <ListItemIcon>{link.icon}</ListItemIcon>
+
                 <ListItemText primary={link.title} />
               </ListItemButton>
             </ListItem>

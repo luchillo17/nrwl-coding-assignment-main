@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Header } from './components/header';
 import { useAppDispatch } from './hooks/hooks';
+import { TicketFormPage } from './pages/ticket-form.page';
 import { TicketsPage } from './pages/tickets.page';
 import { UsersPage } from './pages/users.page';
 import { initializeTicketState } from './store/tickets/tickets';
@@ -39,6 +40,7 @@ const App = () => {
       <Container sx={{ flex: 1, padding: '1rem' }}>
         <Routes>
           <Route path="/" element={<TicketsPage />} />
+          <Route path="/tickets/*" element={<TicketFormPage />} />
           {/* Hint: Try `npx nx g component TicketDetails --no-export` to generate this component  */}
           <Route path="/users" element={<UsersPage />} />
         </Routes>

@@ -3,8 +3,6 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Card,
-  CardContent,
   Stack,
   Typography,
   useTheme,
@@ -12,6 +10,7 @@ import {
 import React, { FC, ReactNode } from 'react';
 
 import { TicketWithUser } from '../store/tickets/tickets';
+import { TicketCard } from './tickets-card';
 
 export interface TicketsAccordionProps {
   title: ReactNode;
@@ -38,21 +37,7 @@ export const TicketsAccordion: FC<TicketsAccordionProps> = ({
         <Stack spacing={2}>
           {tickets &&
             tickets.map((ticket) => (
-              <Card key={ticket.id}>
-                <CardContent>
-                  <Typography>Ticket ID: {ticket.id}</Typography>
-
-                  <Typography>Description: {ticket.description}</Typography>
-
-                  <Typography>
-                    Status: {ticket.completed ? 'Completed' : 'Pending'}
-                  </Typography>
-
-                  <Typography>
-                    Assignee: {ticket.user?.name ?? 'Not assigned'}
-                  </Typography>
-                </CardContent>
-              </Card>
+              <TicketCard key={ticket.id} ticket={ticket}></TicketCard>
             ))}
         </Stack>
       </AccordionDetails>
