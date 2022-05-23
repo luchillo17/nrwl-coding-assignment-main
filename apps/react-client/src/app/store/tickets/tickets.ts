@@ -44,7 +44,7 @@ const ticketsSlice = createSlice({
       }
     },
 
-    assignTicket(
+    assignUserToTicket(
       state,
       { payload: { ticketId, userId } }: PayloadAction<AssigneePayload>
     ) {
@@ -59,7 +59,7 @@ const ticketsSlice = createSlice({
 
 export const {
   addTicket,
-  assignTicket,
+  assignUserToTicket,
   initializeTicketState,
   setTicketStatus,
 } = ticketsSlice.actions;
