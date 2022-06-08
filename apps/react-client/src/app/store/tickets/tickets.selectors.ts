@@ -3,8 +3,18 @@ import { usersSelector } from '../users/users.selectors';
 
 export const ticketsSliceSelector = (state: RootState) => state.tickets;
 
-export const ticketsSelector = (state: RootState) =>
-  ticketsSliceSelector(state).tickets;
+export const ticketQuerySelector = (state: RootState) =>
+  ticketsSliceSelector(state).query;
+
+export const ticketsSelector = (state: RootState) => {
+  const query = ticketQuerySelector(state);
+
+  return query === ''
+    ? ticketsSliceSelector(state).tickets
+    : ticketsSliceSelector(state).tickets.filter((ticket) =>
+        ticket.description.toLowerCase().includes(query.toLowerCase())
+      );
+};
 
 export const usersWithTicketsSelector = (state: RootState) => {
   const users = usersSelector(state);

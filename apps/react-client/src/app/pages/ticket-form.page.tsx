@@ -1,14 +1,13 @@
 import { Button, Card, CardContent, Stack, TextField } from '@mui/material';
 import { useFormik } from 'formik';
 import React, { useMemo } from 'react';
-import { useMatch, useNavigate, useParams } from 'react-router';
+import { useMatch, useNavigate } from 'react-router';
 import * as yup from 'yup';
 
 import { TicketCard } from '../components/tickets-card';
-import { useAppSelector, useAppDispatch } from '../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import { addTicket, TicketWithUser } from '../store/tickets/tickets';
-import { ticketsSelector } from '../store/tickets/tickets.selectors';
-import { useDispatch } from 'react-redux';
+import { ticketsWithUserSelector } from '../store/tickets/tickets.selectors';
 
 const validationSchema = yup.object({
   description: yup
@@ -32,7 +31,7 @@ export const TicketFormPage = () => {
     return Number.isInteger(_id) ? _id : -1;
   }, [idStr]);
 
-  const tickets = useAppSelector(ticketsSelector);
+  const tickets = useAppSelector(ticketsWithUserSelector);
 
   const ticket = useMemo<TicketWithUser>(() => {
     const newTicket: TicketWithUser = {

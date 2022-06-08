@@ -3,6 +3,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Chip,
   Stack,
   Typography,
   useTheme,
@@ -31,6 +32,8 @@ export const TicketsAccordion: FC<TicketsAccordionProps> = ({
         id="panel1a-header"
       >
         <Typography>{title}</Typography>
+
+        <Chip label={tickets.length} color="primary" />
       </AccordionSummary>
 
       <AccordionDetails sx={{ backgroundColor: theme.palette.grey[50] }}>

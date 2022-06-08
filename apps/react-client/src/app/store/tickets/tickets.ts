@@ -11,11 +11,13 @@ export interface AssigneePayload {
 }
 
 export interface TicketsState {
+  query: string;
   tickets: TicketWithUser[];
   formTicket?: Partial<TicketWithUser>;
 }
 
 const initialState: TicketsState = {
+  query: '',
   tickets: [],
 };
 
@@ -25,6 +27,10 @@ const ticketsSlice = createSlice({
   reducers: {
     initializeTicketState(state, action: PayloadAction<TicketWithUser[]>) {
       state.tickets = action.payload;
+    },
+
+    setQuery(state, action: PayloadAction<string>) {
+      state.query = action.payload;
     },
 
     addTicket(state, action: PayloadAction<TicketWithUser>) {
@@ -61,6 +67,7 @@ export const {
   addTicket,
   assignUserToTicket,
   initializeTicketState,
+  setQuery,
   setTicketStatus,
 } = ticketsSlice.actions;
 
